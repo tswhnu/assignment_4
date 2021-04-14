@@ -10,7 +10,7 @@ from data import CityscapesDataset
 from accuracy import compute_iou
 
 class Trainer:
-    def __init__(self, model: nn.Module, ds_split: Dict[str, CityscapesDataset]):
+    def __init__(self, model: nn.Module, ds_split: Dict[str, CityscapesDataset], lr=0.00001):
         # Choose a device to run training on. Ideally, you have a GPU available to accelerate the training process.
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -28,7 +28,9 @@ class Trainer:
         #
         #################################################################################
 
-        self.optimizer = optim.RMSprop(self.model.parameters(), lr=0.00001, momentum=0.99)
+        # self.optimizer = optim.RMSprop(self.model.parameters(), lr=lr, momentum=0.99)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
+
         #         self.optimizer = optim.SGD(self.model.parameters(), lr=0.0001, momentum=0.90, weight_decay=5e-4)
 
         ## EXERCISE #####################################################################
